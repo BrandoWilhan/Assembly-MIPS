@@ -1,0 +1,66 @@
+.data
+
+	string1: .asciiz "\ndigite o numero: "
+	string2: .asciiz "o enesimo primo é: "
+
+.text
+
+.main:
+
+	la $a0, string1
+	jal print
+	
+	jal read
+
+
+li $t0, 2
+move $s0, $zero
+
+while:
+	bge $t0, $t1, saida
+	div $t1, $t0
+	addi $t0, $t0, 1
+	mfhi $s1
+	beqz $s1, incremento
+	bnez $s0, saida
+	j while
+
+incremento:
+	move $t0, $zero
+	addi $s0, $s0, 1
+	addi $t1, $t1, -1
+	jr $ra
+	
+saida:
+	la $a0, string2
+	jal print
+	move $a0, $t1
+	jal print_i
+	li $v0, 10
+	syscall
+	
+print_i:
+	li $v0, 1
+	syscall
+	jr $ra
+
+print:
+	li $v0, 4
+	syscall
+	jr $ra
+
+read:
+	li $v0, 5
+	syscall
+	move $t1, $v0
+	jr $ra
+
+
+	
+	
+	
+	
+	
+	
+	
+	
